@@ -1,11 +1,15 @@
-import Footer from "./components/Common/Footer"
-import Header from "./components/Common/Header"
-
+import { BrowserRouter, Route, Routes } from "react-router-dom"
+import Home from "./pages/Home"
+import Dashboard from "./pages/Dashboard"
 const App = () => {
   return (
     <div>
-      <Header />
-      <Footer />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }

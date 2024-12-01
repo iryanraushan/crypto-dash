@@ -15,12 +15,12 @@
 
 
 body {
-    background-color: var(--secondary-color);
+    background-color: var(--darkgrey);
     color: var(--white);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Parkinsans';
+    /* font-family: 'Parkinsans'; */
 }
 
 ::selection {
@@ -39,4 +39,24 @@ body {
 ::-webkit-scrollbar-thumb {
     background-color: var(--purple);
     border-radius: 10px;
+}
+
+.tract-crypto-heading{
+    color: var(--primary-color);
+    --webkit-text-stroke: 1px var(--primary-color);
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke-width: 1px;
+}
+
+.tract-crypto-heading:hover{
+    color: var(--white);
+    -webkit-text-fill-color: var(--primary-color);
+    transition: all 0.3s;
+}
+
+img {
+    -webkit-user-drag: none;
+    -khtml-user-drag:none;
+    -moz-user-drag:none;
+    -o-user-drag:none;
 }
