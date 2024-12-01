@@ -1,3 +1,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+:root {
+    --primary-color: #fab44c;
+    --secondary-color:#262626;
+    --white: #f3f3f3;
+    --blue : #5659a1;
+    --grey : #888;
+    --darkgrey : #1b1b1b;
+    --green : #61c96f;
+    --red : #f94141;
+}
+@import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap');
+
+
+body {
+    background-color: var(--secondary-color);
+    color: var(--white);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Parkinsans';
+}
+
+::selection {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--darkgrey);
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--purple);
+    border-radius: 10px;
+}
