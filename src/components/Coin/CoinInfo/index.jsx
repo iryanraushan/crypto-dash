@@ -19,7 +19,7 @@ const CoinInfo = ({ coin }) => {
           <img
             src={coin.image}
             alt={`${coin.name} logo`}
-            className="md:w-16 md:h-16 w-10 h-10"
+            className="w-10 h-10"
           />
           <div className="flex flex-col">
             <span className="font-bold text-gray-900 dark:text-white text-lg md:text-xl">{coin.name}</span>
