@@ -1,14 +1,13 @@
 import  { useState } from "react";
 import ListView from "../ListView";
 import GridView from "../GridView";
+import Search from "../Search";
 
-const TabComponents = ({coins}) => {
+const TabComponents = ({coins, loading}) => {
   const [activeTab, setActiveTab] = useState("grid");
 
-  console.log(coins)
-
   return (
-    <div className="mt-14 p-4  w-full lg:max-w-screen-xl max-w-screen-md mx-auto">
+    <div className="mt-10 p-4  w-full lg:max-w-screen-xl max-w-screen-md mx-auto">
       <div className="grid grid-cols-2 border-b border-gray-700">
         <div
           className={`text-center cursor-pointer text-sm md:text-lg ${
@@ -30,9 +29,9 @@ const TabComponents = ({coins}) => {
 
       <div className="mt-6">
         {activeTab === "list" ? (
-          <ListView coins = {coins}/>
+          <ListView coins = {coins} loading={loading}/>
         ) : (
-          <GridView coins = {coins} />
+          <GridView coins = {coins} loading={loading} />
         )}
       </div>
     </div>

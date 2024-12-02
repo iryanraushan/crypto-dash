@@ -56,7 +56,7 @@ function MainComponent() {
         </motion.div>
       </div>
       <div className="gradient-div">
-        <img src={gradient} className="gradient" />
+        <img src={gradient} className="absolute h-[21rem] md:h-[27rem] w-40 md:w-48 rounded-[1rem] right-0 top-[5rem]" />
         <motion.img
           src={iphone}
           className="iphone"

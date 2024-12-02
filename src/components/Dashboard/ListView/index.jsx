@@ -1,5 +1,6 @@
 import { BsGraphDownArrow, BsGraphUpArrow } from "react-icons/bs";
 import { convertNumber } from "../../../functions/convertNumber";
+import { CiBitcoin } from "react-icons/ci";
 
 const ListView = ({ coins }) => {
   const formatNumber = (number) => {
@@ -8,6 +9,17 @@ const ListView = ({ coins }) => {
     }
     return number.toLocaleString(); 
   };
+
+  if (coins.length === 0) {
+    return (
+      <div className="flex justify-center flex-col gap-6 items-center">
+        <CiBitcoin className="text-[5rem] text-primary-color" />
+        <h1 className="text-2xl font-bold text-primary-color">
+          No coins found
+        </h1>
+      </div>
+    );
+  }
 
   return (
     <div className="overflow-x-auto">
