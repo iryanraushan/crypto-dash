@@ -44,15 +44,14 @@ const Pagination = ({ totalPages, onPageChange }) => {
   };
 
   return (
-    <div className="flex justify-center mt-8">
-      <nav aria-label="Page navigation">
+    <div className="flex justify-center mt-8 w-full lg:max-w-screen-xl max-w-screen-md mx-auto">
+      <nav aria-label="">
         <ul className="flex items-center gap-2 h-10 text-base">
-          {/* Previous Button */}
           <li>
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className={`flex items-center justify-center px-4 h-10 rounded-full  hover:bg-primary-color hover:text-gray-700 ${
+              className={`flex items-center justify-center px-2 md:px-4 h-8 rounded-full  hover:bg-primary-color hover:text-gray-700 ${
                 currentPage === 1
                   ? "bg-neutral-300 dark:bg-dark-grey"
                   : "bg-neutral-200 dark:bg-dark-grey dark:text-white"
@@ -63,13 +62,12 @@ const Pagination = ({ totalPages, onPageChange }) => {
             </button>
           </li>
 
-          {/* Page Numbers */}
           {generatePageNumbers().map((page, index) => (
             <li key={index}>
               {typeof page === "number" ? (
                 <button
                   onClick={() => handlePageChange(page)}
-                  className={`flex items-center justify-center px-4 h-10 rounded-full  ${
+                  className={`flex items-center justify-center px-2 md:px-4 h-8 rounded-full  ${
                     page === currentPage
                       ? "bg-primary-color dark:bg-primary-dark text-black"
                       : "bg-neutral-200 dark:bg-dark-grey dark:text-white"
@@ -86,12 +84,11 @@ const Pagination = ({ totalPages, onPageChange }) => {
             </li>
           ))}
 
-          {/* Next Button */}
           <li>
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className={`flex items-center justify-center px-4 h-10 rounded-full  hover:bg-primary-color hover:text-black  ${
+              className={`flex items-center justify-center px-2 md:px-4 h-8 rounded-full  hover:bg-primary-color hover:text-black  ${
                 currentPage === totalPages
                   ? "bg-neutral-300 dark:bg-dark-grey"
                   : "bg-neutral-200 dark:bg-dark-grey dark:text-white"

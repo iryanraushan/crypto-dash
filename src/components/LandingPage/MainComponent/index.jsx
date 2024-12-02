@@ -47,7 +47,7 @@ function MainComponent() {
           <RWebShare
             data={{
               text: "RCrypto made by Ryan Raushan",
-              url: "https://crypto-dashboard-avivashishta.netlify.app/",
+              url: "",
               title: "CryptoTracker.",
             }}
           >
