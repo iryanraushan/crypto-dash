@@ -1,25 +1,51 @@
+/* Importing the font */
 @import url('https://fonts.googleapis.com/css2?family=Parkinsans:wght@300..800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
 :root {
     --primary-color: #fab44c;
-    --secondary-color:#262626;
+    --secondary-color: #262626;
     --white: #f3f3f3;
-    --blue : #5659a1;
-    --grey : #888;
-    --darkgrey : #1b1b1b;
-    --green : #61c96f;
-    --red : #f94141;
+    --blue: #5659a1;
+    --grey: #888;
+    --darkgrey: #1b1b1b;
+    --green: #61c96f;
+    --red: #f94141;
+    --background-color: #fff;
+    --text-color: #000;
+    --scrollbar-thumb-color: #fab44c;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --primary-color: #fab44c;
+        --secondary-color: #f3f3f3;
+        --white: #1b1b1b;
+        --blue: #5659a1;
+        --grey: #888;
+        --darkgrey: #f3f3f3;
+        --green: #61c96f;
+        --red: #f94141;
+        --background-color: #262626;
+        --text-color: #fff;
+        --scrollbar-thumb-color: #fab44c;
+    }
 }
 
 html {
     scroll-behavior: smooth;
 }
 
+@layer base {
+    html {
+      transition: background-color 0.2s ease, color 0.2s ease; 
+    }
+}
+
 body {
-    background-color: var(--darkgrey);
-    color: var(--white);
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -40,18 +66,18 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-    background-color: var(--purple);
+    background-color: var(--scrollbar-thumb-color);
     border-radius: 10px;
 }
 
-.tract-crypto-heading{
+.tract-crypto-heading {
     color: var(--primary-color);
     --webkit-text-stroke: 1px var(--primary-color);
     -webkit-text-fill-color: transparent;
     -webkit-text-stroke-width: 1px;
 }
 
-.tract-crypto-heading:hover{
+.tract-crypto-heading:hover {
     color: var(--white);
     -webkit-text-fill-color: var(--primary-color);
     transition: all 0.3s;
@@ -59,7 +85,7 @@ body {
 
 img {
     -webkit-user-drag: none;
-    -khtml-user-drag:none;
-    -moz-user-drag:none;
-    -o-user-drag:none;
+    -khtml-user-drag: none;
+    -moz-user-drag: none;
+    -o-user-drag: none;
 }

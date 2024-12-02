@@ -38,9 +38,12 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="pb-10">
+    <div className="pb-10 dark:bg-secondary-color h-full">
       <Header search={search} setSearch={setSearch} />
-      <TabComponents coins={search ? filterCoins : paginatedCoins} loading={loading} />
+      <TabComponents
+        coins={search ? filterCoins : paginatedCoins}
+        loading={loading}
+      />
       {!search && (
         <Pagination
           totalPages={coins.length / 10}
@@ -50,7 +53,7 @@ const Dashboard = () => {
         />
       )}
       <div>
-      <BackToTop />
+        <BackToTop />
       </div>
     </div>
   );

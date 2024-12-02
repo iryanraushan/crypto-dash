@@ -1,16 +1,16 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { CoinObject } from "../functions/CoinObject";
+import { useEffect, useState, useCallback } from "react";
+import { Link, useParams } from "react-router-dom";
+import { settingCoinObject } from "../functions/SettingCoinObject";
 import CoinHeader from "../components/Coin/CoinHeader";
 import Header from "../components/Common/Header";
 import CoinInfo from "../components/Coin/CoinInfo";
-import Footer from "../components/Common/Footer";
-import { getCoinData } from "../functions/getCoinData";
-import { getPrices } from "../functions/getCoinPrices";
 import LineChart from "../components/Coin/LineChart";
-import { settingChartData } from "../functions/settingChartData";
 import SelectDays from "../components/Coin/selectedDays";
 import ToggleComponents from "../components/Coin/ToggleComponents";
+import { getCoinData } from "../functions/getCoinData";
+import { getPrices } from "../functions/getCoinPrices";
+import Footer from "../components/Common/Footer";
+import { settingChartData } from "../functions/settingChartData";
 
 const CoinPage = () => {
   const { id } = useParams();
@@ -23,60 +23,51 @@ const CoinPage = () => {
 
   useEffect(() => {
     if (id) {
-      getData();
+      getCoinData(id, setError).then((data) => {
+        if (data) {
+          settingCoinObject(data, setCoin);
+        }
+      });
     }
   }, [id]);
 
-  const getData = async () => {
+  const updateChartData = useCallback(async () => {
     setLoading(true);
-    let coinData = await getCoinData(id, setError);
-    CoinObject(coinData, setCoin);
-    if (coinData) {
-      const prices = await getPrices(id, days, priceType, setError);
-      if (prices) {
-        settingChartData(setChartData, prices);
-        setLoading(false);
-      }
+    const prices = await getPrices(id, days, priceType, setError);
+    if (prices) {
+      settingChartData(setChartData, prices);
     }
-  };
+    setLoading(false);
+  }, [id, days, priceType]);
 
-  const handleDaysChange = async (event) => {
-    setLoading(true);
+  useEffect(() => {
+    if (id) {
+      updateChartData();
+    }
+  }, [id, days, priceType, updateChartData]);
+
+  const handleDaysChange = (event) => {
     setDays(event.target.value);
-    const prices = await getPrices(id, event.target.value, priceType, setError);
-    if (prices) {
-      settingChartData(setChartData, prices);
-      setLoading(false);
-    }
   };
 
-  const handlePriceTypeChange = async (event) => {
-    setLoading(true);
-    setPriceType(event.target.value);
-    const prices = await getPrices(id, days, event.target.value, setError);
-    if (prices) {
-      settingChartData(setChartData, prices);
-      setLoading(false);
-    }
-  };
-
+  console.log(coin);
   return (
     <>
       <Header />
-      {!error && !loading && coin.id ? (
+      {!error && coin.id ? (
         <div className="w-full lg:max-w-screen-xl max-w-screen-md mx-auto mt-12">
-          <div className="">
+          <div>
             <CoinHeader coin={coin} delay={0.5} />
           </div>
-          <div className="">
+          <div className="mt-12">
             <SelectDays handleDaysChange={handleDaysChange} days={days} />
             <ToggleComponents
               priceType={priceType}
-              handlePriceTypeChange={handlePriceTypeChange}
+              setPriceType={setPriceType}
             />
-            <LineChart chartData={chartData} />
+            <LineChart chartData={chartData} id="chart" />
           </div>
-          <CoinInfo title={coin.name} desc={coin.desc} image={coin.image} symbol={coin.symbol}/>
+          <CoinInfo coin={coin} />
         </div>
       ) : error ? (
         <div>
@@ -90,14 +81,17 @@ const CoinPage = () => {
               margin: "2rem",
             }}
           >
-            <button>gg</button>
+            <Link to="/" className="px-4 py-2 text-sm font-semibold text-primary-color bg-dark-grey rounded-full">
+              Go Home
+            </Link>
           </div>
         </div>
       ) : (
         <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-primary-color"></div>
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary-color"></div>
         </div>
       )}
+      <Footer />
     </>
   );
 };

@@ -1,12 +1,11 @@
-import React from "react";
 import { Line } from "react-chartjs-2";
-import { Chart as ChartJS } from "chart.js/auto"; //Dont get rid of this
+import { Chart as ChartJS } from "chart.js/auto"; 
 
-function LineChart({ chartData, multiAxis }) {
+function LineChart({ chartData }) {
   const options = {
     plugins: {
       legend: {
-        display: multiAxis ? true : false,
+        display: false,
       },
     },
     responsive: true,
@@ -17,9 +16,6 @@ function LineChart({ chartData, multiAxis }) {
     scales: {
       crypto1: {
         position: "left",
-      },
-      crypto2: multiAxis && {
-        position: "right",
       },
     },
   };

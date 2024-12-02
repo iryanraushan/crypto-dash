@@ -1,15 +1,24 @@
-
 const Footer = () => {
   return (
-    <footer className="bg-white m-4 dark:bg-secondary-color w-full lg:max-w-screen-xl max-w-screen-md mx-auto rounded-lg">
-      <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
-        <h1 className="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-primary-color">RCrypto</h1>
-        <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2024 <a href="www.iryanraushan.com" className="hover:underline">ryan raushan™</a>. All Rights Reserved.
+    <footer className="bg-white dark:bg-secondary-color w-full max-w-screen-xl mx-auto rounded-lg p-4">
+      <div className="flex flex-col md:flex-row items-center justify-between">
+        <h1 className="text-2xl font-semibold text-gray-900 dark:text-primary-color mb-4 md:mb-0">
+          RCrypto
+        </h1>
+        <span className="text-sm text-gray-500 dark:text-gray-400">
+          © 2024{" "}
+          <a
+            href="https://www.iryanraushan.com"
+            className="hover:underline"
+            aria-label="Visit Ryan Raushan's website"
+          >
+            Ryan Raushan™
+          </a>
+          . All Rights Reserved.
         </span>
       </div>
     </footer>
+  );
+};
 
-  )
-}
-
-export default Footer
+export default Footer;

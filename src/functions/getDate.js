@@ -1,4 +1,7 @@
 export const gettingDate = (number) => {
   const date = new Date(number);
-  return date.getDate() + "/" + (date.getMonth() + 1);
+  const day = date.getDate();
+  const month = date.getMonth() + 1; 
+  const year = date.getFullYear(); 
+  return `${day}/${month}/${year}`;
 };

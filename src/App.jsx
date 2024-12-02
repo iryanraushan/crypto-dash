@@ -4,7 +4,7 @@ import Dashboard from "./pages/Dashboard"
 import CoinPage from "./pages/CoinPage"
 const App = () => {
   return (
-    <div>
+    <div className="light:bg-white dark:bg-secondary-color">
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />

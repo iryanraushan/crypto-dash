@@ -1,4 +1,4 @@
-import  { useState } from "react";
+import { useState } from "react";
 import { GrFormPrevious } from "react-icons/gr";
 
 const Pagination = ({ totalPages, onPageChange }) => {
@@ -43,54 +43,62 @@ const Pagination = ({ totalPages, onPageChange }) => {
     return pages;
   };
 
-
   return (
     <div className="flex justify-center mt-8">
       <nav aria-label="Page navigation">
         <ul className="flex items-center gap-2 h-10 text-base">
+          {/* Previous Button */}
           <li>
             <button
               onClick={() => handlePageChange(currentPage - 1)}
               disabled={currentPage === 1}
-              className={`flex items-center justify-center px-4 h-10 rounded-full border border-primary-color hover:bg-primary-color hover:text-gray-700 ${
-                currentPage === 1 ? "cursor-not-allowed opacity-50" : ""
+              className={`flex items-center justify-center px-4 h-10 rounded-full  hover:bg-primary-color hover:text-gray-700 ${
+                currentPage === 1
+                  ? "bg-neutral-300 dark:bg-dark-grey"
+                  : "bg-neutral-200 dark:bg-dark-grey dark:text-white"
               }`}
               aria-label="Previous"
             >
-              <GrFormPrevious className="text-xl text-primary-color hover:text-black" />
+              <GrFormPrevious className="text-xl" />
             </button>
           </li>
 
+          {/* Page Numbers */}
           {generatePageNumbers().map((page, index) => (
             <li key={index}>
               {typeof page === "number" ? (
                 <button
                   onClick={() => handlePageChange(page)}
-                  className={`flex items-center justify-center px-4 h-10 rounded-full ${
+                  className={`flex items-center justify-center px-4 h-10 rounded-full  ${
                     page === currentPage
-                      ? "text-black bg-primary-color border-primary-color "
-                      : "text-white bg-secondary-color border border-primary-color hover:scale-105"
+                      ? "bg-primary-color dark:bg-primary-dark text-black"
+                      : "bg-neutral-200 dark:bg-dark-grey dark:text-white"
                   }`}
                   aria-current={page === currentPage ? "page" : undefined}
                 >
                   {page}
                 </button>
               ) : (
-                <span className="px-2 text-gray-500">...</span>
+                <span className="px-2 text-gray-500 dark:text-gray-300">
+                  ...
+                </span>
               )}
             </li>
           ))}
 
+          {/* Next Button */}
           <li>
             <button
               onClick={() => handlePageChange(currentPage + 1)}
               disabled={currentPage === totalPages}
-              className={`flex items-center justify-center px-4 h-10 rounded-full border border-primary-color hover:bg-primary-color hover:text-black ${
-                currentPage === 1 ? "cursor-not-allowed opacity-50" : ""
+              className={`flex items-center justify-center px-4 h-10 rounded-full  hover:bg-primary-color hover:text-black  ${
+                currentPage === totalPages
+                  ? "bg-neutral-300 dark:bg-dark-grey"
+                  : "bg-neutral-200 dark:bg-dark-grey dark:text-white"
               }`}
               aria-label="Next"
             >
-              <GrFormPrevious className="text-xl rotate-180 text-primary-color hover:text-black" />
+              <GrFormPrevious className="text-xl rotate-180" />
             </button>
           </li>
         </ul>

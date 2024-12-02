@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 
 function MainComponent() {
   return (
-    <div className="flex w-full lg:max-w-screen-xl max-w-screen-md h-[calc(100vh-100px)] mx-auto mt-24 flex-col md:flex-row">
+    <div className="flex w-full lg:max-w-screen-xl max-w-screen-md h-screen mx-auto mt-24 flex-col md:flex-row">
       <div className="info-landing">
         <motion.h1
           className="heading1"
@@ -32,8 +32,8 @@ function MainComponent() {
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 1, duration: 1 }}
         >
-          Track crypto through a public api in real time. Visit the dashboard to
-          do so!{" "}
+          Track crypto through a public API in real time. Visit the dashboard to
+          do so!
         </motion.p>
         <motion.div
           className="btn-flex"
@@ -46,8 +46,8 @@ function MainComponent() {
           </Link>
           <RWebShare
             data={{
-              text: "CryptoDashboard made by Avi Vashishta using React JS.",
-              url: "https://crypto-dashboard-jan.netlify.app",
+              text: "RCrypto made by Ryan Raushan",
+              url: "https://crypto-dashboard-avivashishta.netlify.app/",
               title: "CryptoTracker.",
             }}
           >
@@ -56,7 +56,10 @@ function MainComponent() {
         </motion.div>
       </div>
       <div className="gradient-div">
-        <img src={gradient} className="absolute h-[21rem] md:h-[27rem] w-40 md:w-48 rounded-[1rem] right-0 top-[5rem]" />
+        <img
+          src={gradient}
+          className="absolute h-[21rem] md:h-[27rem] w-40 md:w-48 rounded-[1rem] right-0 top-[5rem]"
+        />
         <motion.img
           src={iphone}
           className="iphone"

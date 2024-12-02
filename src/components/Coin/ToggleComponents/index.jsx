@@ -1,34 +1,33 @@
-
-export default function ToggleComponents({ priceType, handlePriceTypeChange }) {
+export default function ToggleComponents({ priceType, setPriceType }) {
   return (
-    <div className="flex justify-center items-center mb-6">
-      <div className="flex border border-blue-500 rounded-md">
+    <div className="flex justify-center items-center my-6">
+      <div className="flex border border-primary-color rounded-md">
         <button
-          onClick={() => handlePriceTypeChange("prices")}
+          onClick={() => setPriceType("prices")}
           className={`px-4 py-2 text-sm ${
             priceType === "prices"
-              ? "bg-blue-500 text-white"
-              : "bg-transparent text-blue-500"
-          } border-r border-blue-500 first:rounded-l-md`}
+              ? "bg-primary-color text-white"
+              : "bg-transparent text-primary-color"
+          } border-r border-primary-color first:rounded-l-md`}
         >
           Prices
         </button>
         <button
-          onClick={() => handlePriceTypeChange("market_caps")}
+          onClick={() => setPriceType("market_caps")}
           className={`px-4 py-2 text-sm ${
             priceType === "market_caps"
-              ? "bg-blue-500 text-white"
-              : "bg-transparent text-blue-500"
-          } border-r border-blue-500`}
+              ? "bg-primary-color text-white"
+              : "bg-transparent text-primary-color"
+          } border-r border-primary-color`}
         >
           Market Cap
         </button>
         <button
-          onClick={() => handlePriceTypeChange("total_volumes")}
+          onClick={() => setPriceType("total_volumes")}
           className={`px-4 py-2 text-sm ${
             priceType === "total_volumes"
-              ? "bg-blue-500 text-white"
-              : "bg-transparent text-blue-500"
+              ? "bg-primary-color text-white"
+              : "bg-transparent text-primary-color"
           } last:rounded-r-md`}
         >
           Total Volume

@@ -10,7 +10,7 @@ export default {
         'primary-color': '#fab44c',
         'secondary-color': '#262626',
         'dark-grey': '#1b1b1b',
-        'green': '#61c96f',
+        'green': '#29cc3f',
         'red': '#f94141',
         'grey': '#888',
         'white': '#f3f3f3',
@@ -18,5 +18,6 @@ export default {
     },
   },
   plugins: [],
+  darkMode: 'class',
 }
 

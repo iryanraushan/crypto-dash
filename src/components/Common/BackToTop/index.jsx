@@ -19,7 +19,7 @@ const BackToTop = () => {
 
   return (
     <div
-      className={`fixed bottom-20 right-20 cursor-pointer transition-opacity ${
+      className={`fixed bottom-10 right-10 md:bottom-20 md:right-20 cursor-pointer transition-opacity ${
         isVisible ? "opacity-100" : "opacity-0"
       }`}
     >
