@@ -1,7 +1,7 @@
 import { BsGraphDownArrow, BsGraphUpArrow } from "react-icons/bs";
 import { CiBitcoin } from "react-icons/ci";
 import { Link } from "react-router-dom";
-import Loader from "../../Common/Loader";
+import Loader from "../../Common/GridLoader";
 
 const GridView = ({ coins, loading }) => {
   if (coins.length === 0) {
@@ -38,8 +38,12 @@ const GridView = ({ coins, loading }) => {
                     className="w-12 h-12"
                   />
                   <div className="flex flex-col items-start">
-                    <h3 className="text-sm font-bold uppercase text-gray-800 dark:text-gray-200">{coin.id}</h3>
-                    <p className="text-gray-700 dark:text-gray-300 text-xs text-wrap">{coin.name}</p>
+                    <h3 className="text-sm font-bold uppercase text-gray-800 dark:text-gray-200">
+                      {coin.id}
+                    </h3>
+                    <p className="text-gray-700 dark:text-gray-300 text-xs text-wrap">
+                      {coin.name}
+                    </p>
                   </div>
                 </div>
                 <div className="flex gap-4 items-center mb-4">

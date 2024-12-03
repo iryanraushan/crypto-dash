@@ -50,7 +50,6 @@ const CoinPage = () => {
     setDays(event.target.value);
   };
 
-  console.log(coin);
   return (
     <>
       <Header />

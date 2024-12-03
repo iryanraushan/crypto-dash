@@ -1,7 +1,8 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import Home from "./pages/Home"
-import Dashboard from "./pages/Dashboard"
-import CoinPage from "./pages/CoinPage"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import CoinPage from "./pages/CoinPage";
+
 const App = () => {
   return (
     <div className="light:bg-white dark:bg-secondary-color">
@@ -13,7 +14,7 @@ const App = () => {
         </Routes>
       </BrowserRouter>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;

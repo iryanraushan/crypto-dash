@@ -1,57 +1,51 @@
 import { useEffect, useState } from "react";
 import Header from "../components/Common/Header";
 import TabComponents from "../components/Dashboard/Tabsomponents";
-import axios from "axios";
 import Pagination from "../components/Dashboard/Pagination";
 import BackToTop from "../components/Common/BackToTop";
+import { useCoins } from "../context/CoinContext";
 
 const Dashboard = () => {
-  const [coins, setCoins] = useState([]);
+  const { coins, loading, setCoins, page, setPage } = useCoins();
   const [search, setSearch] = useState("");
-  const [paginatedCoins, setPaginatedCoins] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [searchResults, setSearchResults] = useState([]);
 
-  const filterCoins = coins.filter(
-    (coin) =>
-      coin.name.toLowerCase().includes(search.toLowerCase()) ||
-      coin.symbol.toLowerCase().includes(search.toLowerCase())
-  );
+  const debounce = (func, delay) => {
+    let timeout;
+    return (...args) => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => func(...args), delay);
+    };
+  };
+
+  const filterCoins = (query) => {
+    if (!query) return coins;
+    return coins.filter(
+      (coin) =>
+        coin.name.toLowerCase().includes(query.toLowerCase()) ||
+        coin.symbol.toLowerCase().includes(query.toLowerCase())
+    );
+  };
+
+  const debounceSearch = debounce((query) => {
+    setSearchResults(filterCoins(query));
+  }, 500);
 
   useEffect(() => {
-    getData();
-  }, []);
+    if (search) {
+      debounceSearch(search);
+    } else {
+      setCoins(coins); 
+    }
+  }, [search, debounceSearch, setCoins, coins]);
 
-  const getData = () => {
-    setLoading(true);
-    axios
-      .get(
-        "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=100&page=1&sparkline=false"
-      )
-      .then((response) => {
-        setCoins(response.data);
-        setPaginatedCoins(response.data.slice(0, 10));
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log("ERROR>>>", error.message);
-      });
-  };
+  const paginatedCoins = coins.slice((page - 1) * 10, page * 10);
 
   return (
     <div className="pb-10 dark:bg-secondary-color h-full">
       <Header search={search} setSearch={setSearch} />
-      <TabComponents
-        coins={search ? filterCoins : paginatedCoins}
-        loading={loading}
-      />
-      {!search && (
-        <Pagination
-          totalPages={coins.length / 10}
-          onPageChange={(page) =>
-            setPaginatedCoins(coins.slice((page - 1) * 10, page * 10))
-          }
-        />
-      )}
+      <TabComponents coins={search ? searchResults : paginatedCoins} loading={loading} />
+      {!search && <Pagination currentPage={page} setPage={setPage} />}
       <div>
         <BackToTop />
       </div>

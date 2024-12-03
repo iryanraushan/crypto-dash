@@ -1,6 +1,9 @@
 import { useState } from "react";
 import ListView from "../ListView";
 import GridView from "../GridView";
+import Loader from "../../Common/GridLoader";
+import TableLoader from "../../Common/TableLoader";
+import GridLoader from "../../Common/GridLoader";
 
 const TabComponents = ({ coins, loading }) => {
   const [activeTab, setActiveTab] = useState("grid");
@@ -32,9 +35,11 @@ const TabComponents = ({ coins, loading }) => {
 
       <div className="mt-6">
         {loading ? (
-          <div className="flex justify-center items-center h-64">
-            <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-primary-color dark:border-primary-color"></div>
-          </div>
+          activeTab === "list" ? (
+            <TableLoader />
+          ) : (
+            <GridLoader />
+          )
         ) : activeTab === "list" ? (
           <ListView coins={coins} />
         ) : (
