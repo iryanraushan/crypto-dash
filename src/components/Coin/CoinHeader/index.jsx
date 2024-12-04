@@ -2,7 +2,7 @@ import React from "react";
 import { BsGraphDownArrow, BsGraphUpArrow } from "react-icons/bs";
 import { convertNumber } from "../../../functions/convertNumber";
 
-const Coin = ({ coin }) => {
+const CoinHeader = ({ coin }) => {
   const formatNumber = (number) => {
     if (window.innerWidth < 768) {
       return convertNumber(number);
@@ -67,4 +67,4 @@ const Coin = ({ coin }) => {
   );
 };
 
-export default Coin;
+export default CoinHeader;

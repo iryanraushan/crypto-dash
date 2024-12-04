@@ -1,7 +1,7 @@
 import { BsGraphDownArrow, BsGraphUpArrow } from "react-icons/bs";
 import { convertNumber } from "../../../functions/convertNumber";
-import { CiBitcoin } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import NoDataFound from "../../Common/NoDataFound";
 
 const ListView = ({ coins }) => {
   const formatNumber = (number) => {
@@ -12,14 +12,7 @@ const ListView = ({ coins }) => {
   };
 
   if (coins.length === 0) {
-    return (
-      <div className="flex justify-center flex-col gap-6 items-center">
-        <CiBitcoin className="text-[5rem] text-primary-color dark:text-primary-color" />
-        <h1 className="text-2xl font-bold text-primary-color dark:text-primary-color">
-          No coins found
-        </h1>
-      </div>
-    );
+    return <NoDataFound/>
   }
 
   return (
@@ -46,8 +39,8 @@ const ListView = ({ coins }) => {
                   : "hover:bg-green/10 dark:hover:bg-green/20"
               }`}
             >
-              <Link to={`/coin/${coin.id}`} key={coin.id}>
-                <td className="p-4 flex items-center gap-4">
+              <td className="p-4 flex items-center gap-4">
+                <Link to={`/coin/${coin.id}`} key={coin.id}>
                   <img
                     src={coin.image}
                     alt={`${coin.name} logo`}
@@ -61,8 +54,8 @@ const ListView = ({ coins }) => {
                       {coin.symbol}
                     </span>
                   </div>
-                </td>
-              </Link>
+                </Link>
+              </td>
 
               <td className="p-4 font-semibold text-gray-800 dark:text-gray-200">
                 ${coin.current_price.toLocaleString()}
@@ -87,13 +80,9 @@ const ListView = ({ coins }) => {
                   )}
                 </div>
               </td>
-
-              {/* Volume */}
               <td className="p-4 text-sm text-gray-800 dark:text-gray-400">
                 {formatNumber(coin.total_volume)}
               </td>
-
-              {/* Market Cap */}
               <td className="p-4 text-sm text-gray-800 dark:text-gray-400 hidden md:table-cell">
                 {formatNumber(coin.market_cap)}
               </td>

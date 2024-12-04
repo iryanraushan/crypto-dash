@@ -18,8 +18,7 @@ const Header = ({ search, setSearch }) => {
   }, [darkMode]);
 
   const changeMode = () => {
-    setDarkMode(!darkMode); // Toggle the dark mode state
-    toast.success("Theme Changed!");
+    setDarkMode(!darkMode);
   };
 
   const setDark = () => {
@@ -56,9 +55,7 @@ const Header = ({ search, setSearch }) => {
 
           <div className="flex items-center justify-end gap-3">
             <div>
-              {window.location.pathname === "/dashboard" ? (
-                <Search search={search} setSearch={setSearch} />
-              ) : (
+              {window.location.pathname !== "/dashboard" && (
                 <Link
                   to="/dashboard"
                   className={`px-4 py-2 text-sm font-semibold rounded-full 

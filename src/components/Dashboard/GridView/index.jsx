@@ -2,19 +2,13 @@ import { BsGraphDownArrow, BsGraphUpArrow } from "react-icons/bs";
 import { CiBitcoin } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import Loader from "../../Common/GridLoader";
+import NoDataFound from "../../Common/NoDataFound";
 
 const GridView = ({ coins, loading }) => {
   if (coins.length === 0) {
-    return (
-      <div className="flex justify-center flex-col gap-6 items-center">
-        <CiBitcoin className="text-[5rem] text-primary-color dark:text-primary-color" />
-        <h1 className="text-2xl font-bold text-primary-color dark:text-primary-color">
-          No coins found
-        </h1>
-      </div>
-    );
+    return <NoDataFound/>
   }
-
+  
   return (
     <>
       {loading ? (

@@ -6,7 +6,7 @@ const Pagination = ({ currentPage, setPage }) => {
 
   return (
     <div className="flex justify-center mt-8 w-full lg:max-w-screen-xl max-w-screen-md mx-auto">
-      <nav aria-label="Pagination">
+      <nav>
         <ul className="flex items-center gap-2 h-10 text-base">
           <li>
             <button

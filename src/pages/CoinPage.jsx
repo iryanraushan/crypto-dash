@@ -7,10 +7,10 @@ import CoinInfo from "../components/Coin/CoinInfo";
 import LineChart from "../components/Coin/LineChart";
 import SelectDays from "../components/Coin/selectedDays";
 import ToggleComponents from "../components/Coin/ToggleComponents";
-import { getCoinData } from "../functions/getCoinData";
-import { getPrices } from "../functions/getCoinPrices";
 import Footer from "../components/Common/Footer";
 import { settingChartData } from "../functions/settingChartData";
+import {getCoinData} from "../api/getCoinData"
+import { getPrices } from "../api/getCoinPrices";
 
 const CoinPage = () => {
   const { id } = useParams();
