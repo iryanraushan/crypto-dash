@@ -46,7 +46,7 @@ const SelectDays = ({ days, handleDaysChange }) => {
           aria-labelledby="hs-dropdown-days"
         >
           <div className="p-1 space-y-0.5 text-center">
-            {[7, 30, 60, 90, 120, 365].map((day) => (
+            {[1, 7, 30, 60, 90, 120, 365].map((day) => (
               <button
                 key={day}
                 className={`flex w-full text-center items-center gap-x-3.5 py-2 px-3 rounded-lg text-sm ${

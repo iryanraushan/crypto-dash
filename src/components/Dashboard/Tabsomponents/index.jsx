@@ -1,46 +1,50 @@
-import { useState } from "react";
+import { useState, useMemo, useCallback } from "react";
+import { useQuery } from "@tanstack/react-query";
+
 import ListView from "../ListView";
 import GridView from "../GridView";
 import TableLoader from "../../Common/TableLoader";
 import GridLoader from "../../Common/GridLoader";
-import { useQuery } from "@tanstack/react-query";
-import { fetchCoin } from "../../../api/getData";
 import LoaderSpinner from "../../Common/LoaderSpinner";
 import NoDataFound from "../../Common/NoDataFound";
 import Pagination from "../Pagination";
 import BackToTop from "../../Common/BackToTop";
 import Search from "../Search";
+import { fetchCoin } from "../../../api/getData";
 
 const TabComponents = () => {
   const [activeTab, setActiveTab] = useState("grid");
-
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState("");
 
-  const { data, isLoading } = useQuery({
-    queryKey: ["coins"],
-    queryFn: fetchCoin,
+  const { data: coins = [], isLoading } = useQuery({
+    queryKey: ["coins", page],
+    queryFn: () => fetchCoin(page),
+    staleTime: 1000 * 60 * 2,
+    refetchOnWindowFocus: false,
+    keepPreviousData: true,
   });
 
-  const filterCoins = (query) => {
-    return data.filter(
+  const filteredCoins = useMemo(() => {
+    if (!search) return coins;
+    return coins.filter(
       (coin) =>
-        coin.name.toLowerCase().includes(query.toLowerCase()) ||
-        coin.symbol.toLowerCase().includes(query.toLowerCase())
+        coin.name.toLowerCase().includes(search.toLowerCase()) ||
+        coin.symbol.toLowerCase().includes(search.toLowerCase())
     );
-  };
+  }, [search, coins]);
+
+  const handleTabSwitch = useCallback((tab) => {
+    setActiveTab(tab);
+  }, []);
 
   if (isLoading) {
     return <LoaderSpinner />;
   }
 
-  if (!data || data.length === 0) {
+  if (!coins || coins.length === 0) {
     return <NoDataFound />;
   }
-
-  const filteredCoins = search ? filterCoins(search) : data;
-
-  const paginatedCoins = filteredCoins.slice((page - 1) * 10, page * 10);
 
   return (
     <div className="mt-10 p-4 w-full lg:max-w-screen-xl max-w-screen-md mx-auto">
@@ -52,7 +56,7 @@ const TabComponents = () => {
               ? "font-bold text-primary-color border-b border-primary-color dark:text-primary-color dark:border-b dark:border-primary-color"
               : "text-dark-grey dark:text-gray-400"
           }`}
-          onClick={() => setActiveTab("grid")}
+          onClick={() => handleTabSwitch("grid")}
         >
           Grid View
         </div>
@@ -62,7 +66,7 @@ const TabComponents = () => {
               ? "font-bold text-primary-color border-b border-primary-color dark:text-primary-color dark:border-b dark:border-primary-color"
               : "text-dark-grey dark:text-gray-400"
           }`}
-          onClick={() => setActiveTab("list")}
+          onClick={() => handleTabSwitch("list")}
         >
           List View
         </div>
@@ -76,9 +80,9 @@ const TabComponents = () => {
             <GridLoader />
           )
         ) : activeTab === "list" ? (
-          <ListView coins={search ? filteredCoins : paginatedCoins} />
+          <ListView coins={filteredCoins} />
         ) : (
-          <GridView coins={search ? filteredCoins : paginatedCoins} />
+          <GridView coins={filteredCoins} />
         )}
       </div>
 

@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { settingCoinObject } from "../functions/SettingCoinObject";
 import CoinHeader from "../components/Coin/CoinHeader";
@@ -9,56 +9,116 @@ import SelectDays from "../components/Coin/selectedDays";
 import ToggleComponents from "../components/Coin/ToggleComponents";
 import Footer from "../components/Common/Footer";
 import { settingChartData } from "../functions/settingChartData";
-import {getCoinData} from "../api/getCoinData"
+import { getCoinData } from "../api/getCoinData";
 import { getPrices } from "../api/getCoinPrices";
+import { useQuery } from "@tanstack/react-query";
 
 const CoinPage = () => {
   const { id } = useParams();
-  const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [chartData, setChartData] = useState({ labels: [], datasets: [{}] });
   const [coin, setCoin] = useState({});
   const [days, setDays] = useState(30);
   const [priceType, setPriceType] = useState("prices");
 
-  useEffect(() => {
-    if (id) {
-      getCoinData(id, setError).then((data) => {
-        if (data) {
-          settingCoinObject(data, setCoin);
-        }
-      });
-    }
-  }, [id]);
+  const {
+    data,
+    isLoading: isCoinLoading,
+    isError: isCoinError,
+  } = useQuery({
+    queryKey: ["coin"],
+    queryFn: () => getCoinData(id),
+    staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
+    keepPreviousData: true,
+  });
 
-  const updateChartData = useCallback(async () => {
-    setLoading(true);
-    const prices = await getPrices(id, days, priceType, setError);
+  useEffect(() => {
+    if (data) {
+      settingCoinObject(data, setCoin);
+    }
+  }, [data]);
+
+  const {
+    data: prices,
+    isLoading: isPricesLoading,
+    isError: isPricesError,
+    refetch: refetchPrices,
+
+  } = useQuery({
+    queryKey: ["prices", days, priceType],
+    queryFn: () => getPrices(id, days, priceType),
+    staleTime: 1000 * 60 * 1,
+  });
+
+  useEffect(() => {
     if (prices) {
       settingChartData(setChartData, prices);
     }
-    setLoading(false);
-  }, [id, days, priceType]);
+  }, [prices, days, priceType]);
 
-  useEffect(() => {
-    if (id) {
-      updateChartData();
-    }
-  }, [id, days, priceType, updateChartData]);
+  const handleRefetch = () => {
+    refetchPrices();
+  };
 
   const handleDaysChange = (event) => {
     setDays(event.target.value);
   };
 
-  return (
-    <>
-      <Header />
-      {!error && coin.id ? (
+  if (isCoinLoading || isPricesLoading) {
+    return (
+      <>
+        <Header />
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary-color"></div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (isCoinError || isPricesError) {
+    return (
+      <>
+        <Header />
+        <div>
+          <h1 className="text-center text-lg font-medium">
+            Sorry, Couldn't find the coin you're looking for 😞
+          </h1>
+          <div className="flex justify-center mt-8">
+            <Link
+              to="/"
+              className="px-4 py-2 text-sm font-semibold text-primary-color bg-dark-grey rounded-full"
+            >
+              Go Home
+            </Link>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (
+    coin.id &&
+    !isCoinLoading &&
+    !isCoinError &&
+    !isPricesLoading &&
+    !isPricesError
+  ) {
+    return (
+      <>
+        <Header />
         <div className="w-full lg:max-w-screen-xl max-w-screen-md mx-auto mt-12">
           <div>
             <CoinHeader coin={coin} delay={0.5} />
           </div>
-          <div className="mt-12">
+          <div className="mt-12 relative">
+            <button
+              onClick={handleRefetch}
+              className="px-4 py-2 text-sm absolute top-0 right-0 font-semibold text-primary-color bg-dark-grey rounded-full"
+            >
+              Refresh
+            </button>
             <SelectDays handleDaysChange={handleDaysChange} days={days} />
             <ToggleComponents
               priceType={priceType}
@@ -68,31 +128,10 @@ const CoinPage = () => {
           </div>
           <CoinInfo coin={coin} />
         </div>
-      ) : error ? (
-        <div>
-          <h1 style={{ textAlign: "center" }}>
-            Sorry, Couldn't find the coin you're looking for 😞
-          </h1>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              margin: "2rem",
-            }}
-          >
-            <Link to="/" className="px-4 py-2 text-sm font-semibold text-primary-color bg-dark-grey rounded-full">
-              Go Home
-            </Link>
-          </div>
-        </div>
-      ) : (
-        <div className="flex justify-center items-center h-64">
-          <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-primary-color"></div>
-        </div>
-      )}
-      <Footer />
-    </>
-  );
+        <Footer />
+      </>
+    );
+  }
 };
 
 export default CoinPage;
